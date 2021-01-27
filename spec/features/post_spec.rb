@@ -2,10 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'navigate' do
   describe 'index' do
-
     before do
-      user = User.create(email: 'test@test.com', password: 'asdfasdf', password_confirmation: 'asdfasdf', first_name: 'abdul', last_name: 'azeez')
-      login_as(user, :scope => :user)
+      @user = User.create(email: 'test@test.com', password: 'asdfasdf', password_confirmation: 'asdfasdf', first_name: 'abdul', last_name: 'azeez')
+      login_as(@user, :scope => :user)
       visit posts_path
     end
 
@@ -15,6 +14,13 @@ RSpec.describe 'navigate' do
 
     it 'has a title of Posts' do
       expect(page).to have_content(/Posts/)
+    end
+
+    it 'has a list of posts' do
+      post1 = Post.create(date: Date.today, rationale: 'Post 1', user_id: @user.id)
+      post2 = Post.create(date: Date.today, rationale: 'Post 2', user_id: @user.id)
+      visit posts_path
+      expect(page).to have_content(/Post 1|Post 2/)
     end
   end
 
