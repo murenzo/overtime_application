@@ -1,2 +1,5 @@
-@import "bootstrap";
-@import "posts.scss";
+@import "bootstrap/scss/bootstrap";
+
+.custom-nav {
+  margin-top: 25px;
+}
