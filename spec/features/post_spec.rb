@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe 'navigate' do
-  describe 'index' do
-    before do
-      @user = User.create(email: 'test@test.com', password: 'asdfasdf', password_confirmation: 'asdfasdf', first_name: 'abdul', last_name: 'azeez')
-      login_as(@user, :scope => :user)
-      visit posts_path
-    end
+  
+  before do
+    @user = FactoryBot.create(:user)
+    login_as(@user, :scope => :user)
+    visit posts_path
+  end
 
+  describe 'index' do
     it 'can be reached successfully' do
       expect(page.status_code).to eq(200)
     end
@@ -17,18 +18,16 @@ RSpec.describe 'navigate' do
     end
 
     it 'has a list of posts' do
-      post1 = Post.create(date: Date.today, rationale: 'Post 1', user_id: @user.id)
-      post2 = Post.create(date: Date.today, rationale: 'Post 2', user_id: @user.id)
+      post1 = FactoryBot.create(:post)
+      post2 = FactoryBot.create(:second_post)
       visit posts_path
-      expect(page).to have_content(/Post 1|Post 2/)
+      expect(page).to have_content(/rationale|content/)
     end
   end
 
   describe 'creation' do
 
     before do
-      user = User.create(email: 'test@test.com', password: 'asdfasdf', password_confirmation: 'asdfasdf', first_name: 'abdul', last_name: 'azeez')
-      login_as(user, :scope => :user)
       visit new_post_path
     end
 
@@ -49,7 +48,7 @@ RSpec.describe 'navigate' do
       fill_in 'post[rationale]', with: "User Association"
       click_on "Save"
 
-      expect(User.last.posts.last.rationale).to eq("User Association")
+      expect(@user.posts.last.rationale).to eq("User Association")
     end
   end
 end
