@@ -1,7 +1,24 @@
-<%= form_for @post do |f| %>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<%= form_for @post do |f| %>
+				<div class="form-group">
+					 
+					<label for="date">
+						Date:
+					</label>
+          <%= f.date_field :date, class: "form-control" %>
+				</div>
 
-  <%= f.text_field :date %>
-  <%= f.text_area :rationale %>
+				<div class="form-group">
+					<label for="rationale">
+						Rationale:
+					</label>
+          <%= f.text_area :rationale, class: "form-control" %>
+				</div>
 
-  <%= f.submit 'Save' %>
-<% end %>
+        <%= f.submit 'Save', class: "btn btn-primary" %>
+			<% end %>
+		</div>
+	</div>
+</div>
