@@ -1,24 +1,25 @@
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<%= form_for @post do |f| %>
-				<div class="form-group">
-					 
-					<label for="date">
-						Date:
-					</label>
-          <%= f.date_field :date, class: "form-control" %>
-				</div>
+<%= form_for @post do |f| %>
 
-				<div class="form-group">
-					<label for="rationale">
-						Rationale:
-					</label>
-          <%= f.text_area :rationale, class: "form-control" %>
-				</div>
+  <% if @post.errors.any? %>
+    <%@post.errors.full_messages.each do |error| %>
+      <%= js add_gritter(error, :title => "Overtime app notification!", :sticky => false) %>
+    <% end %>
+  <% end %>
 
-        <%= f.submit 'Save', class: "btn btn-primary" %>
-			<% end %>
-		</div>
-	</div>
-</div>
+  <div class="form-group">
+      
+    <label for="date">
+      Date:
+    </label>
+    <%= f.date_field :date, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label for="rationale">
+      Rationale:
+    </label>
+    <%= f.text_area :rationale, class: "form-control" %>
+  </div>
+
+  <%= f.submit 'Save', class: "btn btn-primary" %>
+<% end %>
