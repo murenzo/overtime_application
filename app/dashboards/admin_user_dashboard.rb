@@ -9,9 +9,8 @@ class AdminUserDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     posts: Field::HasMany,
-    id: Field::Number,
     email: Field::String,
-    password: Field::String,
+    password: Field::String.with_options(searchable: false),
     first_name: Field::String,
     last_name: Field::String,
     type: Field::String,
@@ -26,7 +25,6 @@ class AdminUserDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
   posts
-  id
   email
   ].freeze
 
@@ -34,7 +32,6 @@ class AdminUserDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
   posts
-  id
   email
   first_name
   last_name

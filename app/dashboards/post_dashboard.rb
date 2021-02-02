@@ -9,7 +9,6 @@ class PostDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     user: Field::BelongsTo,
-    id: Field::Number,
     date: Field::Date,
     rationale: Field::Text,
     created_at: Field::DateTime,
@@ -23,7 +22,6 @@ class PostDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
   user
-  id
   date
   rationale
   ].freeze
@@ -32,7 +30,6 @@ class PostDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
   user
-  id
   date
   rationale
   created_at
