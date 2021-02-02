@@ -11,10 +11,7 @@ class UserDashboard < Administrate::BaseDashboard
     posts: Field::HasMany,
     id: Field::Number,
     email: Field::String,
-    encrypted_password: Field::String,
-    reset_password_token: Field::String,
-    reset_password_sent_at: Field::DateTime,
-    remember_created_at: Field::DateTime,
+    password: Field::String,
     first_name: Field::String,
     last_name: Field::String,
     type: Field::String,
@@ -31,7 +28,7 @@ class UserDashboard < Administrate::BaseDashboard
   posts
   id
   email
-  encrypted_password
+  type
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -40,10 +37,6 @@ class UserDashboard < Administrate::BaseDashboard
   posts
   id
   email
-  encrypted_password
-  reset_password_token
-  reset_password_sent_at
-  remember_created_at
   first_name
   last_name
   type
@@ -55,15 +48,10 @@ class UserDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-  posts
   email
-  encrypted_password
-  reset_password_token
-  reset_password_sent_at
-  remember_created_at
+  password
   first_name
   last_name
-  type
   ].freeze
 
   # COLLECTION_FILTERS
@@ -78,10 +66,10 @@ class UserDashboard < Administrate::BaseDashboard
   #   }.freeze
   COLLECTION_FILTERS = {}.freeze
 
-  # Overwrite this method to customize how users are displayed
+  # Overwrite this method to customize how admin users are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(user)
-  #   "User ##{user.id}"
+  # def display_resource(admin_user)
+  #   "AdminUser ##{admin_user.id}"
   # end
 end
