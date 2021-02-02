@@ -11,6 +11,7 @@ class PostDashboard < Administrate::BaseDashboard
     user: Field::BelongsTo,
     date: Field::Date,
     rationale: Field::Text,
+    status: Field::Select.with_options(collection: ["submitted", "approved", "rejected"]),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -24,6 +25,7 @@ class PostDashboard < Administrate::BaseDashboard
   user
   date
   rationale
+  status
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -32,6 +34,7 @@ class PostDashboard < Administrate::BaseDashboard
   user
   date
   rationale
+  status
   created_at
   updated_at
   ].freeze
@@ -43,6 +46,7 @@ class PostDashboard < Administrate::BaseDashboard
   user
   date
   rationale
+  status
   ].freeze
 
   # COLLECTION_FILTERS
