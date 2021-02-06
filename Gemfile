@@ -58,3 +58,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'gritter', '~> 1.2'
 gem "administrate"
+gem 'pundit', '~> 2.1'
