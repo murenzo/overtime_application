@@ -1,14 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe 'navigate' do
-  
+  let!(:user) { FactoryBot.create(:user) }
+
   before do
-    @user = FactoryBot.create(:user)
-    login_as(@user, :scope => :user)
+    login_as(user, :scope => :user)
     visit posts_path
   end
 
   describe 'index' do
+
+    before do
+      post1 = FactoryBot.create(:post, user: user)
+      post2 = FactoryBot.create(:second_post, user: user)
+    end
+
     it 'can be reached successfully' do
       expect(page.status_code).to eq(200)
     end
@@ -18,15 +24,11 @@ RSpec.describe 'navigate' do
     end
 
     it 'has a list of posts' do
-      post1 = FactoryBot.create(:post, user: @user)
-      post2 = FactoryBot.create(:second_post, user: @user)
       visit posts_path
       expect(page).to have_content(/rationale|content/)
     end
 
     it 'has a scope so that only post creators can see their posts' do
-      post1 = FactoryBot.create(:post, user: @user)
-      post2 = FactoryBot.create(:second_post, user: @user)
       other_user = FactoryBot.create(:non_authorized_user)
       post_from_other_user = FactoryBot.create(:third_post, user: other_user)
 
@@ -46,7 +48,7 @@ RSpec.describe 'navigate' do
 
   describe 'delete' do
     it 'can be deleted' do
-      post = FactoryBot.create(:post, user: @user)
+      post = FactoryBot.create(:post, user: user)
       visit posts_path
 
       click_link("delete_post_#{post.id}_from_index")
@@ -86,7 +88,7 @@ RSpec.describe 'navigate' do
 
   describe 'edit' do
     before do
-      @post = FactoryBot.create(:post, user: @user)
+      @post = FactoryBot.create(:post, user: user)
     end
 
     it 'can be edited' do
