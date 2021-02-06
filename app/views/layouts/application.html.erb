@@ -17,7 +17,7 @@
           <%= render 'shared/nav' %>
           <%= yield %>          
         
-        <%= js add_gritter(flash[:notice], :title => "Overtime app notification!", :sticky => false) %>
+        <%= render 'shared/alert' %>
         </div>
       </div>
     </div>
