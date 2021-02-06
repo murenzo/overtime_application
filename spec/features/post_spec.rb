@@ -18,10 +18,20 @@ RSpec.describe 'navigate' do
     end
 
     it 'has a list of posts' do
-      post1 = FactoryBot.create(:post)
-      post2 = FactoryBot.create(:second_post)
+      post1 = FactoryBot.create(:post, user: @user)
+      post2 = FactoryBot.create(:second_post, user: @user)
       visit posts_path
       expect(page).to have_content(/rationale|content/)
+    end
+
+    it 'has a scope so that only post creators can see their posts' do
+      post1 = FactoryBot.create(:post, user: @user)
+      post2 = FactoryBot.create(:second_post, user: @user)
+      other_user = FactoryBot.create(:non_authorized_user)
+      post_from_other_user = FactoryBot.create(:third_post, user: other_user)
+
+      visit posts_path
+      expect(page).not_to have_content(/Some third content/)
     end
   end
 
@@ -36,7 +46,7 @@ RSpec.describe 'navigate' do
 
   describe 'delete' do
     it 'can be deleted' do
-      post = FactoryBot.create(:post)
+      post = FactoryBot.create(:post, user: @user)
       visit posts_path
 
       click_link("delete_post_#{post.id}_from_index")
@@ -47,6 +57,9 @@ RSpec.describe 'navigate' do
   describe 'creation' do
 
     before do
+      logout(:user)
+      @user = FactoryBot.create(:user)
+      login_as(@user, :scope => :user)
       visit new_post_path
     end
 
@@ -66,7 +79,7 @@ RSpec.describe 'navigate' do
       fill_in 'post[date]', with: Date.today
       fill_in 'post[rationale]', with: "User Association"
       click_on "Save"
-
+      
       expect(@user.posts.last.rationale).to eq("User Association")
     end
   end
@@ -78,7 +91,6 @@ RSpec.describe 'navigate' do
 
     it 'can be edited' do
       visit edit_post_path(@post)
-
       fill_in 'post[date]', with: Date.today
       fill_in 'post[rationale]', with: "Edited Content"
       click_on 'Save'
